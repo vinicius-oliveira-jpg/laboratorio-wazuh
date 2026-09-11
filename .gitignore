@@ -1,0 +1,33 @@
+# arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editores
+.vscode/
+.idea/
+
+# logs
+*.log
+
+# arquivos temporários
+*.tmp
+*.temp
+*.swp
+*~
+
+# segredos e credenciais
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# arquivos de máquinas virtuais
+*.vdi
+*.vmdk
+*.vbox
+*.vbox-prev
