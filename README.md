@@ -329,11 +329,6 @@ O usuário foi posteriormente removido para não deixar alterações desnecessá
 
 A Wazuh API foi disponibilizada junto ao ambiente central.
 
-A porta utilizada para a API é:
-
-```text
-55000/TCP
-```
 
 A interface do Dashboard também foi utilizada para validar a conexão com a API.
 
