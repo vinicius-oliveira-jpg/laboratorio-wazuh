@@ -9,6 +9,7 @@ desktop.ini
 
 # logs
 *.log
+logs/
 
 # arquivos temporários
 *.tmp
@@ -31,3 +32,10 @@ credentials/
 *.vmdk
 *.vbox
 *.vbox-prev
+*.ova
+*.ovf
+
+# backups e dumps
+*.bak
+*.backup
+*.dump
