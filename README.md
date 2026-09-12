@@ -1,18 +1,32 @@
-# Laboratório Wazuh — SIEM e Blue Team
+<div align="center">
 
-> Laboratório prático de implantação, configuração, troubleshooting e validação do Wazuh em máquinas virtuais, com foco em fundamentos de SIEM e Blue Team.
+# 🛡️ Laboratório Wazuh
 
-## Sobre o projeto
+**SIEM • Blue Team • Monitoramento • Detecção**
 
-Este projeto documenta a construção de um pequeno ambiente de laboratório utilizando o **Wazuh** para estudar, na prática, coleta de eventos, monitoramento de endpoints, análise de logs e detecção de atividades relacionadas à segurança.
+[![Wazuh](https://img.shields.io/badge/Wazuh-4.14.7-00A8A8?style=for-the-badge&logo=wazuh&logoColor=white)](https://wazuh.com/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu_Server-26.04.1-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+[![Debian](https://img.shields.io/badge/Debian-13-A81D33?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/)
+[![VirtualBox](https://img.shields.io/badge/VirtualBox-Lab-183A61?style=for-the-badge&logo=virtualbox&logoColor=white)](https://www.virtualbox.org/)
+[![Blue Team](https://img.shields.io/badge/Blue%20Team-Defensive-1F8A70?style=for-the-badge)](#)
 
-O ambiente foi criado em um notebook pessoal utilizando **VirtualBox**, com uma VM Ubuntu Server atuando como servidor central do Wazuh e uma VM Debian 13 atuando como endpoint com o Wazuh Agent.
-
-Além da implantação, o projeto registra problemas reais encontrados durante a configuração, principalmente relacionados à limitação de memória do equipamento, e as medidas utilizadas para estabilizar o ambiente.
+</div>
 
 ---
 
-## O que eu quis praticar
+## 🟢 Sobre o laboratório
+
+Este é um laboratório pessoal montado para **praticar segurança defensiva com Wazuh**, desde a instalação do servidor até a coleta e análise de eventos de um endpoint Linux.
+
+O ambiente foi criado no **VirtualBox**, usando uma VM Ubuntu Server como servidor central do Wazuh e uma VM Debian 13 como endpoint com o Wazuh Agent.
+
+A ideia é ter um ambiente pequeno, funcional e fácil de reproduzir para entender na prática o fluxo de um **SIEM**: o endpoint gera eventos, o Agent coleta, o Manager processa e o Dashboard permite consultar e investigar.
+
+Também registrei os problemas que apareceram durante a montagem, principalmente os relacionados ao consumo de memória do Wazuh Indexer.
+
+---
+
+## 🎯 O que eu quis praticar
 
 - Implantar um ambiente Wazuh funcional.
 - Configurar o Wazuh Manager.
@@ -28,7 +42,18 @@ Além da implantação, o projeto registra problemas reais encontrados durante a
 
 ---
 
-## Arquitetura
+## 🧭 Resumo do ambiente
+
+| Componente | Função | Endereço |
+|---|---|---|
+| 🟢 Ubuntu Server | Wazuh Manager / Indexer / Dashboard / API | `192.168.56.102` |
+| 🔵 Debian 13 | Wazuh Agent / endpoint | `192.168.56.101` |
+
+> O laboratório usa uma rede Host-only `192.168.56.0/24` entre as VMs.
+
+---
+
+## 🧩 Arquitetura
 
 ```text
                          notebook
@@ -68,7 +93,7 @@ As máquinas possuem duas interfaces virtuais:
 
 ---
 
-## Ambiente
+## 💻 Ambiente
 
 ### Host físico
 
@@ -110,7 +135,7 @@ As máquinas possuem duas interfaces virtuais:
 
 ---
 
-## Instalação do servidor Wazuh
+## 🛠️ Instalação do servidor Wazuh
 
 O servidor central foi instalado na VM Ubuntu utilizando o instalador all-in-one do Wazuh.
 
@@ -127,15 +152,15 @@ Após a instalação, os serviços foram validados individualmente utilizando o 
 
 ### Evidências
 
-![Wazuh Manager](screenshots/05-wazuh-manager.png)
+![Wazuh Manager](screenshots/04-wazuh-manager.png)
 
-![Wazuh Indexer](screenshots/06-wazuh-indexer.png)
+![Wazuh Indexer](screenshots/05-wazuh-indexer.png)
 
-![Wazuh Dashboard](screenshots/07-wazuh-dashboard.png)
+![Wazuh Dashboard](screenshots/06-wazuh-dashboard.png)
 
 ---
 
-## Configuração de rede
+## 🌐 Configuração de rede
 
 Após a instalação, foi utilizada uma segunda interface de rede em cada VM para criar uma comunicação isolada entre o servidor e o endpoint.
 
@@ -153,13 +178,13 @@ Após a instalação, foi utilizada uma segunda interface de rede em cada VM par
 
 A comunicação foi validada através de testes de conectividade.
 
-![Configuração de rede](screenshots/02-ip-rede-interna.png)
+![Configuração de rede](screenshots/01-ip-rede-interna.png)
 
-![Teste de conectividade](screenshots/03-ping-ubuntu-debian.png)
+![Teste de conectividade](screenshots/02-ping-ubuntu-debian.png)
 
 ---
 
-## Ajustes para deixar o laboratório estável
+## 🧠 Ajustes de memória
 
 O equipamento utilizado possui apenas 8 GB de RAM. Durante a implantação do Wazuh, o consumo de memória tornou-se um dos principais obstáculos.
 
@@ -174,7 +199,7 @@ Foram observados:
 
 Foi configurada uma área de swap de aproximadamente 4 GB na VM Ubuntu para fornecer uma margem adicional de memória.
 
-![Configuração de swap](screenshots/04-swap-ubuntu.png)
+![Configuração de swap](screenshots/03-swap-ubuntu.png)
 
 ### Ajuste do Wazuh Indexer
 
@@ -191,7 +216,7 @@ O ajuste foi necessário para que o laboratório pudesse continuar funcionando d
 
 ---
 
-## Instalação do Wazuh Agent
+## 🛰️ Instalação do Wazuh Agent
 
 Com o servidor estabilizado, o próximo passo foi instalar o agente no Debian 13.
 
@@ -218,15 +243,15 @@ wazuh-agent.service
 Active: active (running)
 ```
 
-![Wazuh Agent ativo](screenshots/09-wazuh-agent-active.png)
+![Wazuh Agent ativo](screenshots/08-wazuh-agent-active.png)
 
 No Dashboard, o endpoint passou a aparecer como ativo.
 
-![Endpoint Debian 13](screenshots/10-endpoint-debian13.png)
+![Endpoint Debian 13](screenshots/09-endpoint-debian13.png)
 
 ---
 
-## Comunicação
+## 🔄 Comunicação
 
 Após a configuração, o fluxo de comunicação passou a funcionar:
 
@@ -248,7 +273,7 @@ A presença do endpoint no Dashboard e a chegada dos eventos confirmaram a comun
 
 ---
 
-## Threat Hunting
+## 🔎 Threat Hunting
 
 Após a conexão do agente, o Dashboard passou a apresentar eventos provenientes do Debian.
 
@@ -261,7 +286,7 @@ Entre os eventos observados:
 
 ---
 
-## Testes
+## 🧪 Testes
 
 Foram realizados testes controlados no Debian para validar a capacidade de coleta e detecção do Wazuh.
 
@@ -296,11 +321,11 @@ A alteração foi detectada pelo Wazuh e apresentada no Threat Hunting.
 
 O usuário foi posteriormente removido para não deixar alterações desnecessárias no endpoint.
 
-![Detecção de novo usuário](screenshots/11-deteccao-novo-usuario.png)
+![Detecção de novo usuário](screenshots/10-deteccao-novo-usuario.png)
 
 ---
 
-## API
+## 🔌 API
 
 A Wazuh API foi disponibilizada junto ao ambiente central.
 
@@ -312,12 +337,11 @@ A porta utilizada para a API é:
 
 A interface do Dashboard também foi utilizada para validar a conexão com a API.
 
-![Acesso inicial ao Dashboard](screenshots/08-acesso-dashboard.png)
-
+![Acesso inicial ao Dashboard](screenshots/07-acesso-dashboard.png)
 
 ---
 
-## Troubleshooting
+## 🧰 Troubleshooting
 
 A implantação não ocorreu de forma totalmente linear. O ambiente apresentou problemas de estabilidade devido principalmente à limitação de recursos do notebook.
 
@@ -349,7 +373,7 @@ Após a correção, o serviço foi iniciado corretamente.
 
 ---
 
-## Limitações do laboratório
+## ⚠️ Limitações
 
 Este projeto foi desenvolvido exclusivamente para fins de estudo.
 
@@ -361,7 +385,7 @@ O objetivo é demonstrar conceitos, aprender a implantação da plataforma e pra
 
 ---
 
-## Resultado
+## ✅ Resultado
 
 Ao final do laboratório foi possível:
 
@@ -383,7 +407,7 @@ Ao final do laboratório foi possível:
 
 ---
 
-## O que pratiquei
+## 📚 O que pratiquei
 
 O laboratório proporcionou prática em:
 
@@ -404,7 +428,7 @@ Um dos principais aprendizados foi perceber que uma plataforma SIEM possui diver
 
 ---
 
-## Estrutura do repositório
+## 📁 Estrutura do repositório
 
 ```text
 laboratorio-wazuh/
@@ -455,4 +479,5 @@ Threat Hunting
 análise do evento
 ```
 
-Este laboratório representa uma etapa prática no estudo de **Blue Team, SIEM, monitoramento e detecção de eventos de segurança**.
+Este laboratório é uma das etapas do meu estudo de **Blue Team, SIEM, monitoramento e detecção de eventos de segurança**.
+
